@@ -16,4 +16,4 @@ lean backtest "StrategyName"
 
 ## License
 Private — client use only
-<!-- updated: 2025-07-08-r01 -->
+<!-- updated: 2025-12-11-r01 -->
