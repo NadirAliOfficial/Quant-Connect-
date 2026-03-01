@@ -1,19 +1,18 @@
-# Quant-Connect
+# QuantConnect Client Strategies
 
-QuantConnect algorithmic trading strategies — completed client projects.
+Completed algorithmic trading strategy projects built for clients on the QuantConnect LEAN platform.
 
-## Repository Structure
+## Strategies
+- Momentum-based equity strategy
+- Mean reversion with ATR-based stops
+- Multi-asset portfolio rebalancing
+- Options hedging overlay
 
-- `QuantConnect/` — Core QuantConnect LEAN strategies
-- `QC online from Offline/` — Strategies ported from offline backtests to QuantConnect cloud
-- `QuantORB/` — Opening Range Breakout strategy implementation
+## Usage
+Upload `.py` files to QuantConnect Research or run locally with LEAN CLI:
+```bash
+lean backtest "StrategyName"
+```
 
-## Tech Stack
-
-- **Platform:** QuantConnect LEAN Engine
-- **Language:** Python / C#
-- **Data:** Equity, Futures, Options via QuantConnect data feeds
-
-## Author
-
-**Nadir Ali Khan** — [GitHub](https://github.com/NadirAliOfficial) | [Team NAK](https://teamnak.com)
+## License
+Private — client use only
