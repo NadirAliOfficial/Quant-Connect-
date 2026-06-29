@@ -6,14 +6,14 @@ class OpeningRangeBreakoutAlgorithm(QCAlgorithm):
         self.SetStartDate(2020, 1, 1)  # Set Start Date
         self.SetCash(100000)  # Set Strategy Cash
         self.SetBrokerageModel(BrokerageName.InteractiveBrokersBrokerage)
-        
+
         # Universe selection
         self.UniverseSettings.Resolution = Resolution.Minute
         self.AddUniverse(self.CoarseSelectionFunction)
-        
+
         # Schedule the ORB strategy to run at the beginning of each trading day
         self.Schedule.On(self.DateRules.EveryDay(), self.TimeRules.AfterMarketOpen("SPY", 5), self.ORBStrategy)
-        
+
         # Dictionary to store high and low prices for each stock
         self.high = {}
         self.low = {}
@@ -26,7 +26,7 @@ class OpeningRangeBreakoutAlgorithm(QCAlgorithm):
     def ORBStrategy(self):
         # Fetch the top 20 stocks with highest relative volume
         top_stocks = self.GetTopRelativeVolumeStocks(20)
-        
+
         # Trade each stock based on ORB strategy
         for symbol in top_stocks:
             if self.Securities[symbol].Price > self.high[symbol]:
@@ -36,12 +36,12 @@ class OpeningRangeBreakoutAlgorithm(QCAlgorithm):
 
     def OnData(self, data):
         pass
-    
+
     def OnSecuritiesChanged(self, changes):
         for security in changes.RemovedSecurities:
             if security.Invested:
                 self.Liquidate(security.Symbol)
-    
+
     def GetTopRelativeVolumeStocks(self, count):
         # Fetch volume data for the last 14 days
         history = self.History(["SPY"], 14, Resolution.Daily)
@@ -49,7 +49,7 @@ class OpeningRangeBreakoutAlgorithm(QCAlgorithm):
             avg_volume = history.loc["SPY"]["volume"].mean()
         else:
             return []
-        
+
         # Calculate relative volume for each stock
         relative_volumes = {}
         for symbol in self.Securities.Keys:
@@ -59,10 +59,10 @@ class OpeningRangeBreakoutAlgorithm(QCAlgorithm):
             volume = security.Volume
             relative_volume = volume / avg_volume
             relative_volumes[symbol] = relative_volume
-        
+
         # Sort stocks by relative volume and get top 'count' stocks
         top_stocks = sorted(relative_volumes, key=relative_volumes.get, reverse=True)[:count]
-        
+
         return top_stocks
 
 # Create your algorithm instance
